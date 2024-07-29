@@ -1,0 +1,40 @@
+-- Create Admins Table
+CREATE TABLE Admins (
+    admin_id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Create Members Table
+CREATE TABLE Members (
+    member_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(20)
+);
+
+-- Create MemberCredentials Table
+CREATE TABLE MemberCredentials (
+    credential_id SERIAL PRIMARY KEY,
+    member_id INT REFERENCES Members(member_id),
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Create Plans Table
+CREATE TABLE Plans (
+    plan_id SERIAL PRIMARY KEY,
+    plan_name VARCHAR(255) NOT NULL,
+    plan_description TEXT,
+    plan_price DECIMAL(10, 2) NOT NULL
+);
+
+-- Create Memberships Table
+CREATE TABLE Memberships (
+    membership_id SERIAL PRIMARY KEY,
+    member_id INT REFERENCES Members(member_id),
+    plan_id INT REFERENCES Plans(plan_id),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
+);
